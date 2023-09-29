@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-function App() {
-  const [count, setCount] = useState(0)
+import styles from "./App.module.scss";
+
+const validationSchema = Yup.object({
+  title: Yup.string().required().min(3),
+  feedback: Yup.string().required().min(3),
+});
+
+const App = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (values, formikHelpers) => {
+    formikHelpers.resetForm();
+    handleClose();
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className={styles.form}>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Open form dialog
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Submit feedback</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText>
+          <Formik
+            initialValues={{
+              title: "",
+              feedback: "",
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <div className={styles.row}>
+                <Field
+                  name="title"
+                  placeholder="Title..."
+                  className={styles.input}
+                />
+                <ErrorMessage name="title" />
+              </div>
+              <div className={styles.row}>
+                <Field
+                  name="feedback"
+                  placeholder="Feedback..."
+                  component="textarea"
+                  className={styles.input}
+                />
+                <ErrorMessage name="feedback" />
+              </div>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit">Submit</Button>
+              </DialogActions>
+            </Form>
+          </Formik>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
 
-export default App
+export default App;
