@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
 import styles from "./App.module.scss";
 
 const validationSchema = Yup.object({
@@ -36,18 +35,17 @@ const App = () => {
   return (
     <div className={styles.form}>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
+        Sign Up
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Submit feedback</DialogTitle>
+        <DialogTitle>Sign up form</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            To sign up please enter your name, email and password.
           </DialogContentText>
           <Formik
             initialValues={{
-              title: "",
+              name: "",
               feedback: "",
             }}
             validationSchema={validationSchema}
@@ -56,17 +54,24 @@ const App = () => {
             <Form>
               <div className={styles.row}>
                 <Field
-                  name="title"
-                  placeholder="Title..."
+                  name="Name"
+                  placeholder="Name..."
                   className={styles.input}
                 />
-                <ErrorMessage name="title" />
+                <ErrorMessage name="feedback" />
               </div>
               <div className={styles.row}>
                 <Field
-                  name="feedback"
-                  placeholder="Feedback..."
-                  component="textarea"
+                  name="email"
+                  placeholder="Email..."
+                  className={styles.input}
+                />
+                <ErrorMessage name="feedback" />
+              </div>
+              <div className={styles.row}>
+                <Field
+                  name="password"
+                  placeholder="Password..."
                   className={styles.input}
                 />
                 <ErrorMessage name="feedback" />

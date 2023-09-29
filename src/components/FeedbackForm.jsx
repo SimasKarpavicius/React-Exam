@@ -9,7 +9,7 @@ const validationSchema = Yup.object({
 
 const FeedbackForm = () => {
   const handleSubmit = (values, formikHelpers) => {
-    alert("woohoo");
+    alert("yeahhh");
     console.log(values);
     formikHelpers.resetForm();
   };
@@ -17,7 +17,7 @@ const FeedbackForm = () => {
   return (
     <Formik
       initialValues={{
-        title: "",
+        name: "",
         feedback: "",
       }}
       validationSchema={validationSchema}
@@ -25,17 +25,16 @@ const FeedbackForm = () => {
     >
       <Form>
         <div className={styles.row}>
-          <Field name="title" placeholder="Title..." className={styles.input} />
-          <ErrorMessage name="title" />
+          <Field name="Name" placeholder="Name..." className={styles.input} />
+          <ErrorMessage name="name" />
         </div>
         <div className={styles.row}>
           <Field
             name="feedback"
             placeholder="Feedback..."
-            component="textarea"
             className={styles.input}
           />
-          <ErrorMessage name="feedback" />
+          <ErrorMessage name="name" />
         </div>
         <button type="submit">Submit</button>
       </Form>
